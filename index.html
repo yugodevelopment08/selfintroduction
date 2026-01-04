@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+        META TAGS
+        These tell the browser important information about our page.
+        - charset: The character encoding (UTF-8 supports most languages)
+        - viewport: Makes the site responsive on mobile devices
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yugo Nishimura | Vibe Coder</title>
+
+    <!--
+        GOOGLE FONTS
+        We're importing 'Orbitron' for headings (futuristic/techy look)
+        and 'Poppins' for body text (clean and modern)
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /*
+            CSS CUSTOM PROPERTIES (Variables)
+            These let us define colors once and reuse them everywhere.
+            Makes it super easy to change the color scheme later!
+        */
+        :root {
+            --bg-primary: #0a0a10;           /* Main dark background */
+            --bg-secondary: #12121a;          /* Slightly lighter dark */
+            --bg-card: #1a1a24;               /* Card backgrounds */
+            --bg-card-hover: #222230;         /* Card hover state */
+            --accent-blue: #00a8ff;           /* Primary accent - bright blue */
+            --accent-purple: #a855f7;         /* Secondary accent - vibrant purple */
+            --accent-pink: #f472b6;           /* Tertiary accent - bright pink */
+            --accent-cyan: #22d3ee;           /* Extra accent - cyan */
+            --text-primary: #ffffff;          /* Main text color */
+            --text-secondary: #a1a1aa;        /* Muted text color */
+            --text-tertiary: #71717a;         /* Even more muted */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --gradient-primary: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            --gradient-accent: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            --gradient-bright: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue), var(--accent-purple));
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+        }
+
+        /*
+            CSS RESET & BASE STYLES
+            Removes default browser styling for consistency
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Makes width/height include padding & border */
+        }
+
+        /*
+            SMOOTH SCROLLING
+            When clicking nav links, the page scrolls smoothly instead of jumping
+        */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6; /* Spacing between lines of text */
+            overflow-x: hidden; /* Prevents horizontal scroll */
+        }
+
+        /*
+            ANIMATED BACKGROUND
+            Creates a subtle gradient animation behind everything
+        */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(0, 168, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(34, 211, 238, 0.05) 0%, transparent 60%);
+            pointer-events: none; /* Allows clicks to pass through */
+            z-index: -1; /* Puts it behind all content */
+        }
+
+        /*
+            NAVIGATION BAR
+            Fixed at the top, with a glass-morphism effect (frosted glass look)
+        */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 3rem;
+            background: rgba(15, 15, 20, 0.85);
+            backdrop-filter: blur(20px); /* Creates the frosted glass effect */
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000; /* Keeps nav above all other content */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Logo styling with modern gradient */
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text; /* Clips gradient to text */
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Navigation links container */
+        .nav-links {
+            display: flex;
+            gap: 2.5rem; /* Space between links */
+            list-style: none;
+        }
+
+        /* Individual nav link styling */
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        /* Hover effect - smooth color change */
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Animated underline on hover */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+            border-radius: 1px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /*
+            HERO SECTION
+            The big intro section at the top of the page
+        */
+        .hero {
+            min-height: 100vh; /* Full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Small greeting text above the main title */
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--accent-blue);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            animation: fadeInUp 0.8s ease; /* Entrance animation */
+        }
+
+        /* Main hero title */
+        .hero-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 4.5rem); /* Responsive font size */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            animation: fadeInUp 0.8s ease 0.15s both;
+        }
+
+        /* Gradient text effect for the title */
+        .hero-title span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero description paragraph */
+        .hero-description {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 550px;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        /*
+            CTA BUTTON (Call To Action)
+            The main button in the hero section
+        */
+        .cta-button {
+            padding: 1rem 2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #fff;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.8s ease 0.45s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Glowing effect on button hover */
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 168, 255, 0.45);
+        }
+
+        /* Animated scroll indicator at bottom of hero */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2.5rem;
+            animation: bounce 2.5s infinite;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 28px;
+            height: 44px;
+            border: 2px solid var(--text-tertiary);
+            border-radius: 14px;
+            position: relative;
+        }
+
+        /* The little dot inside the scroll indicator */
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            width: 4px;
+            height: 8px;
+            background: var(--text-secondary);
+            border-radius: 2px;
+            transform: translateX(-50%);
+            animation: scrollDot 2s infinite;
+        }
+
+        /*
+            SECTIONS
+            Common styles for all main content sections
+        */
+        section {
+            padding: 7rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Section title styling */
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Gradient effect on section titles */
+        .section-title span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Decorative line under section titles */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--gradient-primary);
+            margin: 1.25rem auto;
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        /*
+            ABOUT SECTION
+            Uses CSS Grid for the two-column layout
+        */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr; /* Slightly wider text column */
+            gap: 5rem;
+            align-items: center;
+        }
+
+        /* Profile image container */
+        .about-image {
+            position: relative;
+        }
+
+        .about-image .image-frame {
+            width: 100%;
+            max-width: 360px;
+            aspect-ratio: 1; /* Makes it a perfect square */
+            background: var(--bg-card);
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Subtle gradient overlay on image frame */
+        .about-image .image-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, transparent 60%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .about-text h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            line-height: 1.75;
+            font-size: 0.98rem;
+        }
+
+        /* Stats row in about section */
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        /*
+            SKILLS SECTION
+            Grid layout for skill cards
+        */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+            gap: 1.5rem;
+        }
+
+        /* Individual skill card */
+        .skill-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hover effect - subtle lift and glow */
+        .skill-card:hover {
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 8px 32px rgba(168, 85, 247, 0.2);
+        }
+
+        /* Skill icon */
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.25rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .skill-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-size: 1.05rem;
+        }
+
+        .skill-card p {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+        }
+
+        /* Skill level bar */
+        .skill-level {
+            margin-top: 1.25rem;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .skill-level-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /*
+            PROJECTS SECTION
+            Showcase of projects
+        */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Project card styling */
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 8px 32px rgba(168, 85, 247, 0.2);
+        }
+
+        /* Project image/preview area */
+        .project-image {
+            height: 180px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle gradient overlay on project image */
+        .project-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(0, 149, 246, 0.05) 100%);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .project-content p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+        }
+
+        /* Technology tags */
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .project-tags span {
+            padding: 0.35rem 0.75rem;
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--accent-purple);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .project-tags span:hover {
+            background: rgba(168, 85, 247, 0.25);
+        }
+
+        /* Project links (View, GitHub) */
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-links a {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .project-links .primary {
+            background: var(--gradient-primary);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .project-links .secondary {
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .project-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 168, 255, 0.35);
+        }
+
+        /*
+            FOOTER
+            Bottom section with social links
+        */
+        footer {
+            background: var(--bg-secondary);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card);
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-color);
+        }
+
+        .social-links a:hover {
+            background: var(--gradient-primary);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 168, 255, 0.35);
+            border-color: transparent;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Language Toggle Button */
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 3px;
+            border: 1px solid var(--border-color);
+        }
+
+        .lang-toggle .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .lang-toggle .lang-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .lang-toggle .lang-btn.active {
+            background: var(--gradient-primary);
+            color: #fff;
+        }
+
+        /*
+            ANIMATIONS
+            Keyframe definitions for various animations used throughout
+        */
+
+        /* Fade in from below animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Bouncing animation for scroll indicator */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Scroll indicator dot animation */
+        @keyframes scrollDot {
+            0% {
+                opacity: 1;
+                top: 8px;
+            }
+            100% {
+                opacity: 0;
+                top: 30px;
+            }
+        }
+
+        /* Rotating gradient animation */
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /*
+            RESPONSIVE DESIGN
+            Media queries adjust layout for smaller screens
+        */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            /* Stack nav links vertically on mobile */
+            .nav-links {
+                display: none; /* Hide on mobile for simplicity */
+            }
+
+            section {
+                padding: 5rem 1.5rem;
+            }
+
+            /* Stack about section vertically */
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .about-image {
+                order: -1; /* Move image above text */
+            }
+
+            .about-image .image-frame {
+                max-width: 280px;
+                margin: 0 auto;
+            }
+
+            .stats {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            /* Single column for projects on mobile */
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!--
+        NAVIGATION BAR
+        Fixed at top, contains logo and navigation links
+    -->
+    <nav>
+        <div class="logo">Self Introduction</div>
+        <ul class="nav-links">
+            <li><a href="#about" data-en="About" data-ja="自己紹介">About</a></li>
+            <li><a href="#skills" data-en="Skills" data-ja="スキル">Skills</a></li>
+            <li><a href="#projects" data-en="Projects" data-ja="プロジェクト">Projects</a></li>
+            <li><a href="#contact" data-en="Contact" data-ja="連絡先">Contact</a></li>
+        </ul>
+        <!-- Language Toggle Button -->
+        <div class="lang-toggle">
+            <button id="lang-en" class="lang-btn active" onclick="setLanguage('en')">EN</button>
+            <button id="lang-ja" class="lang-btn" onclick="setLanguage('ja')">JA</button>
+        </div>
+    </nav>
+
+    <!--
+        HERO SECTION
+        First thing visitors see - the big intro
+    -->
+    <section class="hero">
+        <p class="hero-subtitle" data-en="Welcome to my digital space" data-ja="私のデジタル空間へようこそ">Welcome to my digital space</p>
+        <h1 class="hero-title">I'm <span>Yugo Nishimura</span></h1>
+        <p class="hero-description" data-en="Product Manager passionate about building great products. Turning ideas into impactful user experiences." data-ja="優れたプロダクトを作ることに情熱を注ぐプロダクトマネージャー。アイデアをインパクトのあるユーザー体験に変えます。">
+            Product Manager passionate about building great products.
+            Turning ideas into impactful user experiences.
+        </p>
+        <a href="#projects" class="cta-button" data-en="Explore My Work" data-ja="実績を見る">Explore My Work</a>
+
+        <!-- Animated scroll indicator -->
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <!--
+        ABOUT ME SECTION
+        Introduction and personal info
+    -->
+    <section id="about">
+        <h2 class="section-title"><span data-en="About" data-ja="自己">About</span> <span data-en="Me" data-ja="紹介">Me</span></h2>
+        <p class="section-subtitle" data-en="Get to know the person behind the product" data-ja="Yugo Nishimuraを知る">Get to know the person behind the product</p>
+
+        <div class="about-content">
+            <!-- Profile image area -->
+            <div class="about-image">
+                <div class="image-frame">
+                    <!-- Profile photo - make sure profilephoto.jpg is in the same folder -->
+                    <img src="profilephoto.jpg" alt="Yugo Nishimura" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- About text content -->
+            <div class="about-text">
+                <h3 data-en="Hello, I'm Yugo!" data-ja="こんにちは、Yugoです！">Hello, I'm Yugo!</h3>
+                <p data-en="I am a Product Manager at <strong>Manabie</strong>, currently leading the payment module for our Manabie ERP system. I specialise in transforming complex financial workflows into seamless, high-value user experiences." data-ja="私は<strong>Manabie</strong>のプロダクトマネージャーとして、Manabie ERPシステムの決済モジュールを担当しています。複雑な金融ワークフローをシームレスで価値の高いユーザー体験に変えることを専門としています。">
+                    I am a Product Manager at <strong>Manabie</strong>, currently leading the payment module for our Manabie ERP system. I specialise in transforming complex financial workflows into seamless, high-value user experiences.
+                </p>
+                <p data-en="With a bilingual (Japanese/English) perspective and an <strong>MBA from the University of Nottingham Malaysia</strong>, I blend strategic business thinking with a deep empathy for the end-user. My expertise lies in benefit-based feature development—ensuring that every line of code translates into a tangible advantage for the customer." data-ja="日英バイリンガルの視点と<strong>ノッティンガム大学マレーシア校でのMBA</strong>を活かし、戦略的なビジネス思考とエンドユーザーへの深い共感を融合させています。メリットベースの機能開発を意識し、すべての機能がユーザーにとって具体的なメリットとなることを重視しています。">
+                    With a bilingual (Japanese/English) perspective and an <strong>MBA from the University of Nottingham Malaysia</strong>, I blend strategic business thinking with a deep empathy for the end-user. My expertise lies in benefit-based feature development—ensuring that every line of code translates into a tangible advantage for the customer.
+                </p>
+                <p data-en="I thrive in fast-paced, international environments, collaborating daily with cross-functional development teams across <strong>Vietnam, Singapore, and the Philippines</strong> to ship products that matter." data-ja="<strong>ベトナム、シンガポール、フィリピン</strong>の開発チームと日々協力しながら、スピード感のある国際的な環境で活躍しています。">
+                    I thrive in fast-paced, international environments, collaborating daily with cross-functional development teams across <strong>Vietnam, Singapore, and the Philippines</strong> to ship products that matter.
+                </p>
+
+                <!-- Quick stats -->
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">1+</div>
+                        <div class="stat-label" data-en="Years Experience" data-ja="年の経験">Years Experience</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label" data-en="Products" data-ja="プロダクト">Products</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label" data-en="Features Shipped" data-ja="リリース機能">Features Shipped</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label" data-en="Curiosity" data-ja="好奇心">Curiosity</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+        SKILLS SECTION
+        Showcases technical abilities
+    -->
+    <section id="skills">
+        <h2 class="section-title"><span data-en="My" data-ja="保有">My</span> <span data-en="Skills" data-ja="スキル">Skills</span></h2>
+        <p class="section-subtitle" data-en="Technologies and tools I work with" data-ja="私が使用する技術とツール">Technologies and tools I work with</p>
+
+        <div class="skills-grid">
+            <!-- Product Strategy Skill Card -->
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-chess"></i></div>
+                <h3 data-en="Product Strategy" data-ja="プロダクト戦略">Product Strategy</h3>
+                <p data-en="Vision, roadmaps & prioritisation" data-ja="ビジョン、ロードマップ、優先順位付け">Vision, roadmaps & prioritisation</p>
+                <div class="skill-level">
+                    <div class="skill-level-fill" style="width: 90%;"></div>
+                </div>
+            </div>
+
+            <!-- User Research Skill Card -->
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-users"></i></div>
+                <h3 data-en="User Research" data-ja="ユーザーリサーチ">User Research</h3>
+                <p data-en="Interviews, surveys & usability testing" data-ja="インタビュー、アンケート、ユーザビリティテスト">Interviews, surveys & usability testing</p>
+                <div class="skill-level">
+                    <div class="skill-level-fill" style="width: 85%;"></div>
+                </div>
+            </div>
+
+            <!-- Data Analytics Skill Card -->
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-chart-line"></i></div>
+                <h3 data-en="Data Analytics" data-ja="データ分析">Data Analytics</h3>
+                <p data-en="Metrics, A/B testing & insights" data-ja="指標、A/Bテスト、インサイト">Metrics, A/B testing & insights</p>
+                <div class="skill-level">
+                    <div class="skill-level-fill" style="width: 80%;"></div>
+                </div>
+            </div>
+
+            <!-- Documentation Skill Card -->
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-file-lines"></i></div>
+                <h3 data-en="Documentation" data-ja="ドキュメンテーション">Documentation</h3>
+                <p data-en="MRDs & PRDs" data-ja="MRD・PRD作成">MRDs & PRDs</p>
+                <div class="skill-level">
+                    <div class="skill-level-fill" style="width: 85%;"></div>
+                </div>
+            </div>
+
+            <!-- Stakeholder Management Skill Card -->
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-handshake"></i></div>
+                <h3 data-en="Stakeholder Management" data-ja="ステークホルダー管理">Stakeholder Management</h3>
+                <p data-en="Communication & alignment" data-ja="コミュニケーションと連携">Communication & alignment</p>
+                <div class="skill-level">
+                    <div class="skill-level-fill" style="width: 90%;"></div>
+                </div>
+            </div>
+
+            <!-- Design Skill Card -->
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-pen-ruler"></i></div>
+                <h3 data-en="UX & Prototyping" data-ja="UX・プロトタイプ">UX & Prototyping</h3>
+                <p data-en="Figma, wireframes & user flows" data-ja="Figma、ワイヤーフレーム、ユーザーフロー">Figma, wireframes & user flows</p>
+                <div class="skill-level">
+                    <div class="skill-level-fill" style="width: 75%;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+        PROJECTS SECTION
+        Showcase of Vibe Coding projects
+    -->
+    <section id="projects">
+        <h2 class="section-title"><span data-en="Featured" data-ja="主な">Featured</span> <span data-en="Projects" data-ja="プロジェクト">Projects</span></h2>
+        <p class="section-subtitle" data-en="Products and features I've shipped" data-ja="私がリリースしたプロダクトと機能">Products and features I've shipped</p>
+
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-image"><i class="fas fa-users-gear" style="font-size: 4rem; background: var(--gradient-neon); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i></div>
+                <div class="project-content">
+                    <h3 data-en="MED, Internal Employee Database / Evaluation System at AnyMind" data-ja="MED、AnyMindの社内従業員データベース/評価システム">MED, Internal Employee Database / Evaluation System at AnyMind</h3>
+                    <p data-en="Built an internal system to manage employee data and streamline performance review workflows across the organisation." data-ja="従業員データを管理し、組織全体のパフォーマンスレビューワークフローを効率化する社内システムを構築しました。">Built an internal system to manage employee data and streamline performance review workflows across the organisation.</p>
+                    <div class="project-tags">
+                        <span data-en="HR Tech" data-ja="HR Tech">HR Tech</span>
+                        <span data-en="Internal Tools" data-ja="社内ツール">Internal Tools</span>
+                        <span data-en="Workflow Design" data-ja="ワークフロー設計">Workflow Design</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-image"><i class="fas fa-credit-card" style="font-size: 4rem; background: var(--gradient-neon); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i></div>
+                <div class="project-content">
+                    <h3 data-en="Manabie ERP - Payment Module" data-ja="Manabie ERP - 決済モジュール">Manabie ERP - Payment Module</h3>
+                    <p data-en="Leading the payment module for Manabie's core ERP system, transforming complex financial workflows of cram schools in Japan into seamless user experiences." data-ja="Manabie ERPシステムの決済モジュールを担当し、日本の学習塾の複雑な金融ワークフローをシームレスなユーザー体験に変えています。">Leading the payment module for Manabie's core ERP system, transforming complex financial workflows of cram schools in Japan into seamless user experiences.</p>
+                    <div class="project-tags">
+                        <span data-en="EdTech" data-ja="EdTech">EdTech</span>
+                        <span data-en="ERP" data-ja="ERP">ERP</span>
+                        <span data-en="Payment" data-ja="決済">Payment</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+        FOOTER
+        Contact info and social links
+    -->
+    <footer id="contact">
+        <div class="footer-content">
+            <!-- Social media links -->
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/yugo-nishimura-1a11821aa" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="mailto:yugo.rugby08@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="footer-text" data-en="Crafted with curiosity and good vibes" data-ja="好奇心とVibe Codingで作成">
+                Crafted with curiosity and good vibes
+            </p>
+            <p class="footer-text" style="margin-top: 0.5rem;" data-en="&copy; 2026 Yugo Nishimura. All rights reserved." data-ja="&copy; 2026 Yugo Nishimura. All rights reserved.">
+                &copy; 2026 Yugo Nishimura. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!--
+        JAVASCRIPT
+        Adds interactivity and animations
+    -->
+    <script>
+        /*
+            SCROLL ANIMATIONS
+            This script adds a 'fade-in' effect to elements as they enter the viewport.
+            Uses the Intersection Observer API - a modern way to detect element visibility.
+        */
+
+        // Select all elements we want to animate
+        const observerOptions = {
+            threshold: 0.1, // Trigger when 10% of element is visible
+            rootMargin: '0px 0px -50px 0px' // Offset from viewport bottom
+        };
+
+        // Create the observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // When element enters viewport
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Apply initial hidden state and observe all cards
+        document.querySelectorAll('.skill-card, .project-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        /*
+            SMOOTH SCROLL FOR NAV LINKS
+            Enhances the scroll experience when clicking navigation links
+        */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        /*
+            NAV BACKGROUND CHANGE ON SCROLL
+            Makes the nav more opaque when user scrolls down
+        */
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(10, 10, 15, 0.95)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 15, 0.8)';
+            }
+        });
+
+        /*
+            LANGUAGE TOGGLE
+            Switches between English (EN) and Japanese (JA)
+        */
+        let currentLang = 'en'; // Default language is English
+
+        function setLanguage(lang) {
+            // Set the language
+            currentLang = lang;
+
+            // Update button active states
+            document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+            document.getElementById('lang-ja').classList.toggle('active', lang === 'ja');
+
+            // Find all elements with data-en and data-ja attributes
+            const translatableElements = document.querySelectorAll('[data-en][data-ja]');
+
+            translatableElements.forEach(element => {
+                // Get the translation for the current language
+                const translation = element.getAttribute(`data-${currentLang}`);
+
+                // Update the element's content (using innerHTML to preserve HTML tags like <strong>)
+                element.innerHTML = translation;
+            });
+
+            // Update the logo text
+            const logo = document.querySelector('.logo');
+            logo.textContent = currentLang === 'en' ? 'Self Introduction' : '自己紹介';
+        }
+
+        /*
+            TYPING EFFECT (Optional Enhancement)
+            Uncomment this code to add a typing effect to the hero title
+        */
+        /*
+        const text = "Vibe Coder";
+        const heroSpan = document.querySelector('.hero-title span');
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                heroSpan.textContent = text.substring(0, index + 1);
+                index++;
+                setTimeout(typeWriter, 150);
+            }
+        }
+
+        // Start typing when page loads
+        window.addEventListener('load', () => {
+            heroSpan.textContent = '';
+            typeWriter();
+        });
+        */
+    </script>
+</body>
+</html>
